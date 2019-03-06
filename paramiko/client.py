@@ -35,10 +35,7 @@ from paramiko.ed25519key import Ed25519Key
 from paramiko.hostkeys import HostKeys
 from paramiko.py3compat import string_types
 from paramiko.rsakey import RSAKey
-from paramiko.ssh_exception import (
-    SSHException,
-    BadHostKeyException,
-)
+from paramiko.ssh_exception import SSHException, BadHostKeyException
 from paramiko.transport import Transport
 from paramiko.util import retry_on_signal, ClosingContextManager
 
@@ -302,9 +299,10 @@ class SSHClient(ClosingContextManager):
             Added the ``passphrase`` argument.
         """
         if not sock:
+
             def create_and_connect_socket():
-                return socket.create_connection((hostname, port),
-                                                timeout=timeout)
+                return socket.create_connection((hostname, port), timeout)
+
             sock = retry_on_signal(create_and_connect_socket)
 
         t = self._transport = Transport(
